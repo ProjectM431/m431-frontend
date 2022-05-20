@@ -21,7 +21,7 @@
                     <input v-model="userPassword" type="password" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1" placeholder="Mot de passe"/>
                   </div>
                   <div class="text-center pt-1 mb-12 pb-1">
-                    <button  class="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3" type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" style="background: linear-gradient(to right, #6F00FF, #7A36D2, #8D5CCD, #997FBA);">
+                    <button @click="loginAuthToken()" class="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3" type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" style="background: linear-gradient(to right, #6F00FF, #7A36D2, #8D5CCD, #997FBA);">
                       Se connecter !
                     </button>
                     <a class="text-gray-500" href="#!">Mot de passe oublié ?</a>
@@ -56,8 +56,7 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import moment from "moment";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -65,6 +64,32 @@ export default {
   data: () => ({
     userMail: "",
     userPassword: "",
+    apiAuthToken: "http://127.0.0.1:8003/api-token-auth/",
+    isLoginFailed: false,
   }),
+
+  methods: {
+    // Login avec l'API
+    loginAuthToken() {
+      const loginInfo = {
+        username: this.userMail,
+        password: this.userPassword,
+      }
+      // Appelle à l'API
+      axios.post(this.apiAuthToken, loginInfo).then((response) => {
+        localStorage.setItem('token', response.data.token);
+        console.log(response.data)
+         console.log("then")
+         // Met la variable a true
+         this.isLoginFailed = true
+         // Si la variable est true alors redirection
+         if (this.isLoginFailed == true) {
+           this.$router.push({ path: '/login' })
+         }
+      }).catch(() => { // Si le login est pas bon alors
+        this.isLoginFailed = false
+      }); 
+    },
+  },
 };
 </script>
