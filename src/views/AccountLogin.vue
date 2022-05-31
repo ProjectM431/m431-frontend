@@ -171,7 +171,7 @@ export default {
          this.isLogged = true
          // Si la variable est true alors redirection
          if (this.isLogged == true) {
-          //  this.$router.push({ path: '/login' })
+           this.$router.push({ path: '/student' })
          }
       }).catch(() => { // Si le login est pas bon alors
         this.isLogged = false
