@@ -21,7 +21,7 @@
                                             </svg>
                                         </div>
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">24</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">2</h4>
                                             <div class="text-gray-500">Eleves</div>
                                         </div>
                                     </div>
