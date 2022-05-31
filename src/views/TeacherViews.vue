@@ -3,20 +3,6 @@
         <div>        
         <div class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
-                <header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-indigo-600">
-                    <div class="flex items-center">
-                    </div>
-                    <div class="flex items-center">
-                        <div class="relative">
-                        </div>
-                        <div class="relative">
-                            <button class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
-                                <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80" alt="Your avatar">
-                            </button>
-                            <div class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>
-                        </div>
-                    </div>
-                </header>
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
                         <h3 class="text-gray-700 text-3xl font-medium">Gestion</h3>
