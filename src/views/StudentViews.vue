@@ -1,11 +1,15 @@
 <template>
   <div class="student">
         <div>        
-        <div class="flex h-screen bg-gray-200">
+        <div v-if="token == null" class="flex h-screen bg-gray-200">
+            pas de permissions
+        </div>
+        <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
                         <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
+                        <h3 v-bind:key="userInfo.id" v-for="userInfo in userInfo" class="text-gray-700 text-3xl font-medium">Bonjour {{ userInfo.first_name }}</h3>
                         <div class="mt-4">
                             <div class="flex flex-wrap -mx-6">
                                 <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -98,20 +102,25 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
+
 
 export default {
   name: "App",
 
   data: () => ({
     isLogged: null,
+    userInfo : {},
+    apiUser: "http://127.0.0.1:8003/profile/user",
+    token: null,
   }),
 
   methods: {
 
   },
-
   mounted() {
+    axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
+    this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
   },
 };
 </script>
