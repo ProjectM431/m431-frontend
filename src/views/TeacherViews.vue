@@ -1,6 +1,9 @@
 <template>
   <div class="teacher">
-        <div>        
+        <div>     
+        <div v-if="token == null" class="flex h-screen bg-gray-200">
+            Vous n'avez pas la permissions d'accéder à cette page
+        </div>   
         <div class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
@@ -135,6 +138,14 @@ export default {
 
   methods: {
     
+  },
+
+  mounted() {
+    
+    this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.token = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.token = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.token = localStorage.getItem('user.last_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
   },
 };
 </script>

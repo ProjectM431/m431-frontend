@@ -2,14 +2,16 @@
   <div class="student">
         <div>        
         <div v-if="token == null" class="flex h-screen bg-gray-200">
-            pas de permissions
+            Vous n'avez pas la permissions d'accéder à cette page
         </div>
         <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
-                        <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
-                        <h3 v-bind:key="userInfo.id" v-for="userInfo in userInfo" class="text-gray-700 text-3xl font-medium">Bonjour {{ userInfo.first_name }}</h3>
+                        <div class="flex justify-between">
+                            <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
+                            <h3 class="text-gray-700 text-3xl font-medium">Bonjour {{ userInfo.first_name }}, bienvenue sur Gestioonie</h3>
+                        </div>
                         <div class="mt-4">
                             <div class="flex flex-wrap -mx-6">
                                 <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -68,7 +70,6 @@
                                                 </th>
                                             </tr>
                                         </thead>
-        
                                         <tbody class="bg-white">
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -79,7 +80,6 @@
                                                         </div>
                                                     </div>
                                                 </td>
-        
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900"></div>
                                                     <div class="text-sm leading-5 text-gray-900">31.05.2022</div>
@@ -111,7 +111,13 @@ export default {
   data: () => ({
     isLogged: null,
     userInfo : {},
+    user_id_cache: null,
+    user_first_name_cache: null,
+    user_last_name_cache: null,
+    apiAuth: "http://127.0.0.1:8003/api-token-auth/",
     apiUser: "http://127.0.0.1:8003/profile/user",
+    apiAppreciation: "http://127.0.0.1:8003/appreciations",
+    apiUserId: "http://127.0.0.1:8003/profile/user/",
     token: null,
   }),
 
@@ -119,8 +125,13 @@ export default {
 
   },
   mounted() {
-    axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
+    // axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
     this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.user_id_cache = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.user_first_name_cache = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    this.user_last_name_cache = localStorage.getItem('user.last_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
+    axios.get("http://127.0.0.1:8003/profile/user/" + this.user_id_cache).then((response) => (this.userInfo = response.data)); // API User
+
   },
 };
 </script>

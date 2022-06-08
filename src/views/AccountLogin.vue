@@ -165,6 +165,9 @@ export default {
       // Appelle à l'API
       axios.post(this.apiAuthToken, loginInfo).then((response) => {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user.id', response.data.user.id);
+        localStorage.setItem('user.first_name', response.data.user.first_name);
+        localStorage.setItem('user.last_name', response.data.user.last_name);
         console.log(response.data)
          console.log("then")
          // Met la variable a true
