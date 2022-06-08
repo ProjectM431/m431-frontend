@@ -6,12 +6,24 @@
         </div>
         <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
+                <header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-indigo-600">
+                    <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
+                    <div class="flex items-center">
+                    </div>
+                    <div class="flex items-center">
+                        <div class="relative">
+                        </div>
+                        <div class="relative">
+                            <button class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
+                                <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80" alt="Your avatar">
+                            </button>
+                            <div class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>
+                        </div>
+                    </div>
+                </header>
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
-                        <div class="flex justify-between">
-                            <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
-                            <h3 class="text-gray-700 text-3xl font-medium">Bonjour {{ userInfo.first_name }}, bienvenue sur Gestioonie</h3>
-                        </div>
+                            <h3 class="text-gray-700 text-3xl font-medium">Bienvenue {{ userInfo.first_name }}</h3>
                         <div class="mt-4">
                             <div class="flex flex-wrap -mx-6">
                                 <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -71,21 +83,21 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white">
-                                            <tr>
+                                            <tr v-bind:key="userAppreciation.id" v-for="userAppreciation in userAppreciation">
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="flex items-center">
                                                         <div class="ml-4">
-                                                            <div class="text-sm leading-5 font-medium text-gray-900">Arrivées tardives</div>
-                                                            <div class="text-sm leading-5 text-gray-500">AT</div>
+                                                            <div class="text-sm leading-5 font-medium text-gray-900">{{ userAppreciation.appreciation.title }}</div>
+                                                            <div class="text-sm leading-5 text-gray-500">{{ userAppreciation.appreciation.key }}</div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900"></div>
-                                                    <div class="text-sm leading-5 text-gray-900">31.05.2022</div>
+                                                    <div class="text-sm leading-5 text-gray-900"> Le {{ momentFormat(userAppreciation.date_time) }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                   <div class="text-sm leading-5 text-gray-900">Mme Moto</div>
+                                                   <div class="text-sm leading-5 text-gray-900">A FAIRE</div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -103,7 +115,7 @@
 
 <script>
 import axios from "axios";
-
+import moment from "moment";
 
 export default {
   name: "App",
@@ -111,17 +123,23 @@ export default {
   data: () => ({
     isLogged: null,
     userInfo : {},
+    userAppreciation: {},
     user_id_cache: null,
     user_first_name_cache: null,
     user_last_name_cache: null,
     apiAuth: "http://127.0.0.1:8003/api-token-auth/",
     apiUser: "http://127.0.0.1:8003/profile/user",
     apiAppreciation: "http://127.0.0.1:8003/appreciations",
+    apiAppreciationId: "http://127.0.0.1:8003/appreciations?user=", 
     apiUserId: "http://127.0.0.1:8003/profile/user/",
     token: null,
   }),
 
   methods: {
+    // Format de la date modifier pour que ça sois plus lisible
+    momentFormat(date) {
+      return moment(date).format("DD-MM-YYYY à h:mm");
+    },
 
   },
   mounted() {
@@ -130,7 +148,8 @@ export default {
     this.user_id_cache = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_first_name_cache = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_last_name_cache = localStorage.getItem('user.last_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
-    axios.get("http://127.0.0.1:8003/profile/user/" + this.user_id_cache).then((response) => (this.userInfo = response.data)); // API User
+    axios.get(this.apiUserId + this.user_id_cache).then((response) => (this.userInfo = response.data)); // API User
+    axios.get(this.apiAppreciationId + this.user_id_cache).then((response) => (this.userAppreciation = response.data)); // API User
 
   },
 };
