@@ -28,11 +28,11 @@
                             <div class="flex flex-wrap -mx-6">
                                 <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
                                     <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-                                        <div class="p-3 rounded-full bg-indigo-600 bg-opacity-75">
+                                        <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
                                             <img class="h-8 w-8" src="../assets/runner-silhouette-svgrepo-com.svg" alt="arrivée_tarive">
                                         </div>
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">2</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationAT.length}}</h4>
                                             <div class="text-gray-500">Arrivées tardives</div>
                                         </div>
                                     </div>
@@ -44,27 +44,63 @@
                                             <img class="h-8 w-8" src="../assets/iconmonstr-check-mark-15.svg" alt="absence_excusée">
                                         </div>
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">24</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationAEX.length}}</h4>
                                             <div class="text-gray-500">Absences excusées</div>
-                                        </div>
+                                        </div>  
                                     </div>
                                 </div>
-        
+
                                 <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
                                     <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
                                         <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
-                                            <img class="h-8 w-8" src="../assets/iconmonstr-door-6.svg" alt="renvoiesimple">
+                                            <img class="h-8 w-8" src="../assets/iconmonstr-door-6.svg" alt="renvoie">
                                         </div>
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">1</h4>
-                                            <div class="text-gray-500">Renvoi simple</div>
-                                        </div>
-                                    </div>
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationR.length}}</h4>
+                                            <div class="text-gray-500">Renvoi</div>
+                                        </div>  
+                                    </div> 
                                 </div>
-                            </div>
+
+                                <div class="w-full pt-6 mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                                    <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+                                        <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
+                                            <img class="h-8 w-8" src="../assets/iconmonstr-book-18.svg" alt="dnf">
+                                        </div>
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationDNF.length}}</h4>
+                                            <div class="text-gray-500">Devoir non fait</div>
+                                        </div>  
+                                    </div> 
+                                </div>
+
+                                 <div class="w-full pt-6 mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                                    <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+                                        <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
+                                            <img class="h-8 w-8" src="../assets/iconmonstr-x-mark-2.svg" alt="aex">
+                                        </div>
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationANE.length}}</h4>
+                                            <div class="text-gray-500">Absence non excusé</div>
+                                        </div>  
+                                    </div> 
+                                </div>
+
+                                <div class="w-full pt-6 mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                                    <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+                                        <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
+                                            <img class="h-8 w-8" src="../assets/iconmonstr-idea-4.svg" alt="oublie">
+                                        </div>
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">{{userAppreciationIdObservationOUB.length}}</h4>
+                                            <div class="text-gray-500">Oublie</div>
+                                        </div>  
+                                    </div> 
+                                </div>
+                            </div>  
                         </div>
                         <div class="mt-8">
-                        </div>
+                        </div> 
                         <div class="flex flex-col mt-8">
                             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                                 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -124,6 +160,12 @@ export default {
     isLogged: null,
     userInfo : {},
     userAppreciation: {},
+    userAppreciationIdObservationAEX: {},
+    userAppreciationIdObservationANE: {},
+    userAppreciationIdObservationAT: {},
+    userAppreciationIdObservationR: {},
+    userAppreciationIdObservationDNF: {},
+    userAppreciationIdObservationOUB: {},
     user_id_cache: null,
     user_first_name_cache: null,
     user_last_name_cache: null,
@@ -132,6 +174,12 @@ export default {
     apiAppreciation: "http://127.0.0.1:8003/appreciations",
     apiAppreciationId: "http://127.0.0.1:8003/appreciations?user=", 
     apiUserId: "http://127.0.0.1:8003/profile/user/",
+    userAppreciationANE: 3, // id ANE
+    userAppreciationAEX: 4, // id AEX
+    userAppreciationAT: 5, // id AT
+    userAppreciationR: 6, // id R
+    userAppreciationDNF: 7, // id DNF
+    userAppreciationOUB: 8, // id OUB
     token: null,
   }),
 
@@ -150,6 +198,12 @@ export default {
     this.user_last_name_cache = localStorage.getItem('user.last_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     axios.get(this.apiUserId + this.user_id_cache).then((response) => (this.userInfo = response.data)); // API User
     axios.get(this.apiAppreciationId + this.user_id_cache).then((response) => (this.userAppreciation = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationANE ).then((response) => (this.userAppreciationIdObservationANE = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationAEX ).then((response) => (this.userAppreciationIdObservationAEX = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationR ).then((response) => (this.userAppreciationIdObservationR = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationAT ).then((response) => (this.userAppreciationIdObservationAT = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationDNF ).then((response) => (this.userAppreciationIdObservationDNF = response.data)); // API User
+    axios.get("http://127.0.0.1:8003/appreciations?user="+ this.user_id_cache + "&appreciation=" + this.userAppreciationOUB ).then((response) => (this.userAppreciationIdObservationOUB = response.data)); // API User
 
   },
 };
