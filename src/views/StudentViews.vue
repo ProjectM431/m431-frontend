@@ -6,21 +6,10 @@
         </div>
         <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
-                <header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-indigo-600">
-                    <h3 class="text-gray-700 text-3xl font-medium">Gestioonie</h3>
-                    <div class="flex items-center">
-                    </div>
-                    <div class="flex items-center">
-                        <div class="relative">
-                        </div>
-                        <div class="relative">
-                            <button class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
-                                <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80" alt="Your avatar">
-                            </button>
-                            <div class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>
-                        </div>
-                    </div>
+                <header class="flex justify-center items-center py-4 px-6 ">
+                    <img src="../assets/logo2-removebg-preview.png" alt="ads">
                 </header>
+                
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
                             <h3 class="text-gray-700 text-3xl font-medium">Bienvenue {{ userInfo.first_name }}</h3>
@@ -114,7 +103,7 @@
                                                     Date de l'appréciations
                                                 </th>
                                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                    Nom professeur(e)
+                                                    Heure de l'appréciations
                                                 </th>
                                             </tr>
                                         </thead>
@@ -130,10 +119,10 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900"></div>
-                                                    <div class="text-sm leading-5 text-gray-900"> Le {{ momentFormat(userAppreciation.date_time) }}</div>
+                                                    <div class="text-sm leading-5 text-gray-900"> Le {{ momentFormatDate(userAppreciation.date_time) }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                   <div class="text-sm leading-5 text-gray-900">A FAIRE</div>
+                                                   <div class="text-sm leading-5 text-gray-900">à {{ momentFormatHour(userAppreciation.date_time) }}</div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -185,13 +174,17 @@ export default {
 
   methods: {
     // Format de la date modifier pour que ça sois plus lisible
-    momentFormat(date) {
-      return moment(date).format("DD-MM-YYYY à h:mm");
+    momentFormatDate(date) {
+      return moment(date).format("DD-MM-YYYY");
+    },
+
+    momentFormatHour(date) {
+      return moment(date).format("h:mm");
     },
 
   },
   mounted() {
-    // axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
+    axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
     this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_id_cache = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_first_name_cache = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur

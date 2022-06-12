@@ -4,7 +4,7 @@
         <div v-if="token == null" class="flex h-screen bg-gray-200">
             Vous n'avez pas la permissions d'accéder à cette page
         </div>   
-        <div class="flex h-screen bg-gray-200">
+        <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
@@ -80,22 +80,19 @@
                                                     Date de l'appréciations
                                                 </th>
                                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                    Role
+                                                    Envoyez l'appréciations
                                                 </th>
                                             </tr>
                                         </thead>
         
                                         <tbody class="bg-white">
-                                            <tr>
+                                            <tr v-bind:key="userList.id" v-for="userList in userList">
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="flex items-center">
-                                                        <div class="flex-shrink-0 h-10 w-10">
-                                                            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="">
-                                                        </div>
                                                         <div class="ml-4">
-                                                            <div class="text-sm leading-5 font-medium text-gray-900">Manuel LAO
+                                                            <div class="text-sm leading-5 font-medium text-gray-900"> {{ userList.first_name }} {{ userList.last_name }}
                                                             </div>
-                                                            <div class="text-sm leading-5 text-gray-500">manuel.lao@mobiliere.ch</div>
+                                                            <div class="text-sm leading-5 text-gray-500">{{userList.email}}</div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -103,14 +100,16 @@
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900"></div>
                                                     <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <option>MR LAO</option>
+                                                    <option v-for="observationList in observationList" :key="observationList.id">{{observationList.title}}</option>
                                                     </select>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                   <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                   <input type="datetime-local" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    Etudiant(e)
+                                                <td class="px-6 py-4 whitespace-no-wrap border-b flex justify-center border-gray-200">
+                                                   <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                                        Envoyez
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -127,13 +126,18 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "App",
 
   data: () => ({
     isLogged: null,
+    token: null,
+    userList: {},
+    observationList: {},
+    apiUser: "http://127.0.0.1:8003/profile/user",
+    apiObservation: "http://127.0.0.1:8003/observation",
   }),
 
   methods: {
@@ -141,7 +145,8 @@ export default {
   },
 
   mounted() {
-    
+    axios.get(this.apiUser).then((response) => (this.userList = response.data)); // API User
+    axios.get(this.apiObservation).then((response) => (this.observationList = response.data)); // API Observation
     this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.token = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.token = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
