@@ -1,4 +1,12 @@
 <template>
+<!--
+  Autheur:        Théo Ribbi & Nadir Serhir 
+  Projet:         Gestioonie
+  Description:    Plateforme pour la gestion de vie scolaire (Faite pour le Module 431)
+  Composant:      StudentView.vue
+  Date:           13.06.2022
+  Version:        1.0
+-->
   <div class="student">
         <div>        
         <div v-if="token == null" class="flex h-screen bg-gray-200">
@@ -6,9 +14,6 @@
         </div>
         <div v-if="token != null" class="flex h-screen bg-gray-200">
             <div class="flex-1 flex flex-col overflow-hidden">
-                <header class="flex justify-center items-center py-4 px-6 ">
-                    <img src="../assets/logo2-removebg-preview.png" alt="ads">
-                </header>
                 
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-6 py-8">
@@ -148,6 +153,7 @@ export default {
   data: () => ({
     isLogged: null,
     userInfo : {},
+    userInfoNoId : {},
     userAppreciation: {},
     userAppreciationIdObservationAEX: {},
     userAppreciationIdObservationANE: {},
@@ -184,7 +190,7 @@ export default {
 
   },
   mounted() {
-    axios.get(this.apiUser).then((response) => (this.userInfo = response.data)); // API User
+    axios.get(this.apiUser).then((response) => (this.userInfoNoId = response.data)); // API User
     this.token = localStorage.getItem('token'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_id_cache = localStorage.getItem('user.id'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur
     this.user_first_name_cache = localStorage.getItem('user.first_name'); // Token de l'API d'authentification (Comp. AccountLogin.vue) et le stock dans le navigateur

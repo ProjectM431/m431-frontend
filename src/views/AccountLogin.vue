@@ -1,4 +1,12 @@
 <template>
+<!--
+  Autheur:        Théo Ribbi & Nadir Serhir 
+  Projet:         Gestioonie
+  Description:    Plateforme pour la gestion de vie scolaire (Faite pour le Module 431)
+  Composant:      AccountLogin.vue
+  Date:           13.06.2022
+  Version:        1.0
+-->
   <div class="login">
   <section class="h-full gradient-form bg-gray-200 md:h-screen">
   <div class="container py-12 px-6 h-full">
@@ -53,10 +61,9 @@
               <div class="text-white px-4 py-6 md:p-12 md:mx-6">
                 <h4 class="text-xl font-semibold mb-6">Garder une vue sur votre vie scolaire</h4>
                 <p class="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat.
+                 Avoir Gestioonie avec soi c'est pouvoir constater une évolution en temps réel et ne pas comparer bulletin après bulletin. 
+                 <br> Pouvoir avoir Gestioonie avec soi permet de se mettre à soi-même une certaine pression directe et ne pas attendre la fin d'un semestre et échouer.
+                 <br> Avoir Gestioonie avec soi c'est réussir.
                 </p>
               </div>
             </div>
@@ -64,10 +71,9 @@
               <div class="text-white px-4 py-6 md:p-12 md:mx-6">
                 <h4 class="text-xl font-semibold mb-6">Garder une vue sur votre vie scolaire</h4>
                 <p class="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat.
+                  Avoir Gestioonie avec soi c'est pouvoir constater une évolution en temps réel et ne pas comparer bulletin après bulletin. 
+                 <br> Pouvoir avoir Gestioonie avec soi permet de se mettre à soi-même une certaine pression directe et ne pas attendre la fin d'un semestre et échouer.
+                 <br> Avoir Gestioonie avec soi c'est réussir.
                 </p>
               </div>
             </div>
@@ -141,7 +147,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"; // Librairie pour utiliser les API's
 
 export default {
   name: "App",
@@ -174,7 +180,7 @@ export default {
          this.isLogged = true
          // Si la variable est true alors redirection
          if (this.isLogged == true) {
-           this.$router.push({ path: '/student' })
+           this.$router.push({ path: '/redirect' })
          }
       }).catch(() => { // Si le login est pas bon alors
         this.isLogged = false
